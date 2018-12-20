@@ -109,22 +109,11 @@ public class CodeScanner: UIView {
     }()
     
     public convenience init(configuration: CodeScannerConfiguration) {
-        
         self.init()
         self.configuration = configuration
-        
         setup()
-        
     }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     private func setup() {
     
         backgroundColor = .clear
@@ -237,30 +226,36 @@ public class CodeScanner: UIView {
     
     private func updateView() {
 
-        let viewWidth = bounds.width
-        let viewHeight = bounds.height
-        
         let scale: CGFloat = 0.8
-        let boxWidth = viewWidth * scale
-        let boxHeight = min(viewHeight * scale, boxWidth)
         
-        let box = CGRect(x: (viewWidth - boxWidth) / 2, y: (viewHeight - boxHeight) / 2, width: boxWidth, height: boxHeight)
+        // 确保是整型，否则小数会出现布局的细微偏移
+        let boxWidth = round(bounds.width * scale)
+        var boxHeight = round(bounds.height * scale)
+        if boxHeight > boxWidth {
+            boxHeight = boxWidth
+        }
+        
+        let x = round((bounds.width - boxWidth) / 2)
+        let y = round((bounds.height - boxHeight) / 2)
+        
+        let box = CGRect(x: x, y: y, width: boxWidth, height: boxHeight)
 
         capturePreviewLayer?.frame = bounds
         
+        // 这里的顺序必须是 laserView -> viewFinder -> 后面两个顺序无所谓
         laserView.frame.size = CGSize(width: boxWidth - 2 * configuration.viewFinderBorderWidth - 2 * configuration.laserGap, height: configuration.laserHeight)
         laserView.center.x = box.midX
         
-        viewFinder.frame = bounds
         viewFinder.box = box
+        viewFinder.frame = bounds
         viewFinder.setNeedsLayout()
         viewFinder.setNeedsDisplay()
         
         guideView.center.x = bounds.midX
-        guideView.frame.origin.y = box.origin.y + boxHeight + configuration.guideMarginTop
+        guideView.frame.origin.y = y + boxHeight + configuration.guideMarginTop
         
         torchButton.center.x = bounds.midX
-        torchButton.frame.origin.y = box.origin.y - configuration.torchButtonMarginBottom - configuration.torchButtonHeight
+        torchButton.frame.origin.y = y - configuration.torchButtonMarginBottom - configuration.torchButtonHeight
         
         stopLaser()
 
