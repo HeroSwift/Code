@@ -18,6 +18,7 @@
 		9D391FC821CB51D40003DD67 /* CodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D391FC321CB51D40003DD67 /* CodeScanner.swift */; };
 		9D391FC921CB51D40003DD67 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D391FC421CB51D40003DD67 /* QRCodeView.swift */; };
 		9D921DCA21CB7D840083C779 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D921DC921CB7D840083C779 /* CodeView.swift */; };
+		9D921DCC21CB90C10083C779 /* CodeScannerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D921DCB21CB90C10083C779 /* CodeScannerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		9D391FC321CB51D40003DD67 /* CodeScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeScanner.swift; sourceTree = "<group>"; };
 		9D391FC421CB51D40003DD67 /* QRCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		9D921DC921CB7D840083C779 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
+		9D921DCB21CB90C10083C779 /* CodeScannerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeScannerDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				9D921DC921CB7D840083C779 /* CodeView.swift */,
 				9D391FC021CB51D40003DD67 /* BarCodeView.swift */,
 				9D391FC221CB51D40003DD67 /* CodeScannerConfiguration.swift */,
+				9D921DCB21CB90C10083C779 /* CodeScannerDelegate.swift */,
 				9D391FC321CB51D40003DD67 /* CodeScanner.swift */,
 				9D391FC421CB51D40003DD67 /* QRCodeView.swift */,
 				9D391FC121CB51D40003DD67 /* ViewFinder.swift */,
@@ -223,6 +226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D921DCC21CB90C10083C779 /* CodeScannerDelegate.swift in Sources */,
 				9D391FC621CB51D40003DD67 /* ViewFinder.swift in Sources */,
 				9D391FC821CB51D40003DD67 /* CodeScanner.swift in Sources */,
 				9D391FC921CB51D40003DD67 /* QRCodeView.swift in Sources */,

@@ -15,13 +15,13 @@ public class CodeScannerConfiguration {
     
     public var viewFinderBorderColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.6)
     
-    public var guideTitle = "扫描"
+    public var guideLabelTitle = "扫描"
     
-    public var guideTextFont = UIFont.systemFont(ofSize: 12)
+    public var guideLabelTextFont = UIFont.systemFont(ofSize: 12)
     
-    public var guideTextColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.7)
+    public var guideLabelTextColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.7)
     
-    public var guideMarginTop: CGFloat = 14
+    public var guideLabelMarginTop: CGFloat = 14
     
     public var laserGap: CGFloat = 10
     

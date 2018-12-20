@@ -4,12 +4,12 @@ import AVFoundation
 
 public class CodeScanner: UIView {
     
-    public var supportedCodeTypes: [AVMetadataObject.ObjectType] = [ .qr, .code128 ]
+    public var delegate: CodeScannerDelegate!
     
-    public var onScanResult: ((String) -> Void)?
+    private var supportedCodeTypes: [AVMetadataObject.ObjectType] = [ .qr, .code128 ]
     
     private var configuration: CodeScannerConfiguration!
-    
+
     private var captureSession: AVCaptureSession!
     
     private var captureDevice: AVCaptureDevice!
@@ -34,11 +34,13 @@ public class CodeScanner: UIView {
     private var isPreviewing = false {
         didSet {
             if isPreviewing {
+                guideLabel.isHidden = false
                 torchButton.isHidden = false
                 laserView.isHidden = false
                 startLaser()
             }
             else {
+                guideLabel.isHidden = true
                 torchButton.isHidden = true
                 laserView.isHidden = true
                 stopLaser()
@@ -76,13 +78,14 @@ public class CodeScanner: UIView {
         
     }()
     
-    private lazy var guideView: UILabel = {
+    private lazy var guideLabel: UILabel = {
         
         let view = UILabel()
         
-        view.text = configuration.guideTitle
-        view.font = configuration.guideTextFont
-        view.textColor = configuration.guideTextColor
+        view.isHidden = true
+        view.text = configuration.guideLabelTitle
+        view.font = configuration.guideLabelTextFont
+        view.textColor = configuration.guideLabelTextColor
         
         view.sizeToFit()
         
@@ -226,18 +229,31 @@ public class CodeScanner: UIView {
     
     private func updateView() {
 
-        let scale: CGFloat = 0.8
+        var x: CGFloat = 0
+        var y: CGFloat = 0
         
-        // 确保是整型，否则小数会出现布局的细微偏移
-        let boxWidth = round(bounds.width * scale)
-        var boxHeight = round(bounds.height * scale)
-        if boxHeight > boxWidth {
-            boxHeight = boxWidth
+        var boxWidth: CGFloat = 0
+        var boxHeight: CGFloat = 0
+        
+        if let capturePreviewLayer = capturePreviewLayer {
+            
+            capturePreviewLayer.frame = bounds
+            
+            let scale: CGFloat = 0.8
+            
+            // 确保是整型，否则小数会出现布局的细微偏移
+            boxWidth = round(bounds.width * scale)
+            boxHeight = round(bounds.height * scale)
+            if boxHeight > boxWidth {
+                boxHeight = boxWidth
+            }
+            
+            x = round((bounds.width - boxWidth) / 2)
+            y = round((bounds.height - boxHeight) / 2)
+            
         }
         
-        let x = round((bounds.width - boxWidth) / 2)
-        let y = round((bounds.height - boxHeight) / 2)
-        
+
         let box = CGRect(x: x, y: y, width: boxWidth, height: boxHeight)
 
         capturePreviewLayer?.frame = bounds
@@ -251,8 +267,8 @@ public class CodeScanner: UIView {
         viewFinder.setNeedsLayout()
         viewFinder.setNeedsDisplay()
         
-        guideView.center.x = bounds.midX
-        guideView.frame.origin.y = y + boxHeight + configuration.guideMarginTop
+        guideLabel.center.x = bounds.midX
+        guideLabel.frame.origin.y = y + boxHeight + configuration.guideLabelMarginTop
         
         torchButton.center.x = bounds.midX
         torchButton.frame.origin.y = y - configuration.torchButtonMarginBottom - configuration.torchButtonHeight
@@ -309,8 +325,8 @@ extension CodeScanner: AVCaptureMetadataOutputObjectsDelegate {
         }
         
         let result = metadataObject as! AVMetadataMachineReadableCodeObject
-        if let text = result.stringValue {
-            onScanResult?(text)
+        if let code = result.stringValue {
+            delegate.codeScannerDidScanSuccess(self, code: code)
         }
         
     }
