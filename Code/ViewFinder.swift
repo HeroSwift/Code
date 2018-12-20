@@ -28,7 +28,7 @@ public class ViewFinder: UIView {
 
     public override func draw(_ rect: CGRect) {
         
-        guard let context = UIGraphicsGetCurrentContext() else {
+        guard let context = UIGraphicsGetCurrentContext(), box.width > 0, box.height > 0 else {
             return
         }
         

@@ -9,6 +9,8 @@ public class BarCodeView: CodeView {
             return nil
         }
         
+        filter.setValue(0, forKey: "inputQuietSpace")
+        
         return filter
         
     }

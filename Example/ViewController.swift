@@ -42,11 +42,11 @@ class ViewController: UIViewController {
         view.addConstraints([
             NSLayoutConstraint(item: barcodeView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 50),
             NSLayoutConstraint(item: barcodeView, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: barcodeView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 100),
-            NSLayoutConstraint(item: barcodeView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 50),
+            NSLayoutConstraint(item: barcodeView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 360),
+            NSLayoutConstraint(item: barcodeView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 60),
         ])
         
-        barcodeView.text = "barcode"
+        barcodeView.text = "barcodebarcode"
         
         
         
@@ -58,13 +58,13 @@ class ViewController: UIViewController {
         view.addSubview(qrcodeView)
         
         view.addConstraints([
-            NSLayoutConstraint(item: qrcodeView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 50),
+            NSLayoutConstraint(item: qrcodeView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -50),
             NSLayoutConstraint(item: qrcodeView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: qrcodeView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 100),
             NSLayoutConstraint(item: qrcodeView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 100),
         ])
         
-        qrcodeView.text = "qrcode"
+        qrcodeView.text = "qrcode1111111111"
         
         
         
