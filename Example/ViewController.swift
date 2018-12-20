@@ -14,22 +14,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-//        let qrcodeView = QRCodeView()
-//        qrcodeView.translatesAutoresizingMaskIntoConstraints = false
-//        qrcodeView.backgroundColor = .red
-//        
-//        view.addSubview(qrcodeView)
-//        
-//        view.addConstraints([
-//            NSLayoutConstraint(item: qrcodeView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0),
-//            NSLayoutConstraint(item: qrcodeView, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0),
-//            NSLayoutConstraint(item: qrcodeView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 200),
-//            NSLayoutConstraint(item: qrcodeView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 200),
-//        ])
-//        qrcodeView.text = "SN00000000001"
-//        
-//        
+
         let configuration = CodeScannerConfiguration()
         configuration.guideTitle = "扫描吧"
         
@@ -46,6 +31,44 @@ class ViewController: UIViewController {
             NSLayoutConstraint(item: scanner, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: scanner, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: 0),
         ])
+        
+        
+        
+        
+        
+        let barcodeView = BarCodeView()
+        barcodeView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(barcodeView)
+        
+        view.addConstraints([
+            NSLayoutConstraint(item: barcodeView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 50),
+            NSLayoutConstraint(item: barcodeView, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: barcodeView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 100),
+            NSLayoutConstraint(item: barcodeView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 50),
+        ])
+        
+        barcodeView.text = "barcode"
+        
+        
+        
+        
+        
+        let qrcodeView = QRCodeView()
+        qrcodeView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(qrcodeView)
+        
+        view.addConstraints([
+            NSLayoutConstraint(item: qrcodeView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 50),
+            NSLayoutConstraint(item: qrcodeView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: qrcodeView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 100),
+            NSLayoutConstraint(item: qrcodeView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 100),
+        ])
+        
+        qrcodeView.text = "qrcode"
+        
+        
         
     }
 

@@ -96,7 +96,7 @@ public class CodeScanner: UIView {
         
         let view = UIButton()
         
-        view.setImage(configuration.torchOffImage, for: .normal)
+        view.setImage(configuration.torchOnImage, for: .normal)
         view.frame.size = CGSize(width: configuration.torchButtonWidth, height: configuration.torchButtonHeight)
         view.isHidden = true
         
