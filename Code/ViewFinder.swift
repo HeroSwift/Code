@@ -3,17 +3,17 @@ import UIKit
 
 public class ViewFinder: UIView {
     
-    public var maskColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.61)
+    public var maskColor: UIColor!
     
-    public var cornerColor = UIColor(red: 1, green: 0.48, blue: 0.03, alpha: 1)
+    public var cornerColor: UIColor!
     
-    public var cornerWidth: CGFloat = 2
+    public var cornerWidth: CGFloat!
     
-    public var cornerSize: CGFloat = 16
+    public var cornerSize: CGFloat!
     
-    public var borderWidth = 1 / UIScreen.main.scale
+    public var borderWidth: CGFloat!
     
-    public var borderColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.6)
+    public var borderColor: UIColor!
     
     public var box: CGRect!
 

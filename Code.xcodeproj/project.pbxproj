@@ -14,7 +14,7 @@
 		9D391FBB21CB51A30003DD67 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D391FB921CB51A30003DD67 /* LaunchScreen.storyboard */; };
 		9D391FC521CB51D40003DD67 /* BarCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D391FC021CB51D40003DD67 /* BarCodeView.swift */; };
 		9D391FC621CB51D40003DD67 /* ViewFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D391FC121CB51D40003DD67 /* ViewFinder.swift */; };
-		9D391FC721CB51D40003DD67 /* CodeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D391FC221CB51D40003DD67 /* CodeConfiguration.swift */; };
+		9D391FC721CB51D40003DD67 /* CodeScannerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D391FC221CB51D40003DD67 /* CodeScannerConfiguration.swift */; };
 		9D391FC821CB51D40003DD67 /* CodeScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D391FC321CB51D40003DD67 /* CodeScanner.swift */; };
 		9D391FC921CB51D40003DD67 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D391FC421CB51D40003DD67 /* QRCodeView.swift */; };
 /* End PBXBuildFile section */
@@ -41,7 +41,7 @@
 		9D391FBC21CB51A30003DD67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D391FC021CB51D40003DD67 /* BarCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarCodeView.swift; sourceTree = "<group>"; };
 		9D391FC121CB51D40003DD67 /* ViewFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFinder.swift; sourceTree = "<group>"; };
-		9D391FC221CB51D40003DD67 /* CodeConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeConfiguration.swift; sourceTree = "<group>"; };
+		9D391FC221CB51D40003DD67 /* CodeScannerConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeScannerConfiguration.swift; sourceTree = "<group>"; };
 		9D391FC321CB51D40003DD67 /* CodeScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeScanner.swift; sourceTree = "<group>"; };
 		9D391FC421CB51D40003DD67 /* QRCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,7 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				9D391FC021CB51D40003DD67 /* BarCodeView.swift */,
-				9D391FC221CB51D40003DD67 /* CodeConfiguration.swift */,
+				9D391FC221CB51D40003DD67 /* CodeScannerConfiguration.swift */,
 				9D391FC321CB51D40003DD67 /* CodeScanner.swift */,
 				9D391FC421CB51D40003DD67 /* QRCodeView.swift */,
 				9D391FC121CB51D40003DD67 /* ViewFinder.swift */,
@@ -224,7 +224,7 @@
 				9D391FC821CB51D40003DD67 /* CodeScanner.swift in Sources */,
 				9D391FC921CB51D40003DD67 /* QRCodeView.swift in Sources */,
 				9D391FC521CB51D40003DD67 /* BarCodeView.swift in Sources */,
-				9D391FC721CB51D40003DD67 /* CodeConfiguration.swift in Sources */,
+				9D391FC721CB51D40003DD67 /* CodeScannerConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +270,7 @@
 		9D391FA521CB51950003DD67 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -333,6 +334,7 @@
 		9D391FA621CB51950003DD67 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -407,6 +409,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = com.finstao.Code;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -436,6 +439,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = com.finstao.Code;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

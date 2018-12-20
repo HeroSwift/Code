@@ -4,64 +4,28 @@ import AVFoundation
 
 public class CodeScanner: UIView {
     
-    
-    public var guideTextFont = UIFont.systemFont(ofSize: 12)
-    
-    public var guideTextColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.7)
-    
-    public var guideMarginTop: CGFloat = 14
-    
-    public var laserGap: CGFloat = 10
-    
-    public var laserHeight: CGFloat = 1
-    
-    public var laserColor = UIColor(red: 1, green: 0.48, blue: 0.03, alpha: 0.625)
-    
-    public var torchOnImage = UIImage(named: "code_scanner_torch_on")
-    
-    public var torchOffImage = UIImage(named: "code_scanner_torch_off")
-    
-    public var torchButtonWidth: CGFloat = 44
-    
-    public var torchButtonHeight: CGFloat = 44
-    
-    public var torchButtonMarginBottom: CGFloat = 0
-    
-    public var guideTitle = "" {
-        didSet {
-            guideView.text = guideTitle
-            guideView.sizeToFit()
-        }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-
     public var supportedCodeTypes: [AVMetadataObject.ObjectType] = [ .qr, .code128 ]
     
     public var onScanResult: ((String) -> Void)?
+    
+    private var configuration: CodeScannerConfiguration!
     
     private var captureSession: AVCaptureSession!
     
     private var captureDevice: AVCaptureDevice!
     
-    private var capturePreviewLayer: AVCaptureVideoPreviewLayer!
+    private var capturePreviewLayer: AVCaptureVideoPreviewLayer?
     
     private var isTorchOn = false {
         didSet {
             if isTorchOn {
                 if setTorchMode(.on) {
-                    torchButton.setImage(torchOffImage, for: .normal)
+                    torchButton.setImage(configuration.torchOffImage, for: .normal)
                 }
             }
             else {
                 if setTorchMode(.off) {
-                    torchButton.setImage(torchOnImage, for: .normal)
+                    torchButton.setImage(configuration.torchOnImage, for: .normal)
                 }
             }
         }
@@ -86,7 +50,7 @@ public class CodeScanner: UIView {
         
         let view = UIView()
         
-        view.backgroundColor = laserColor
+        view.backgroundColor = configuration.laserColor
         view.isHidden = true
         
         addSubview(view)
@@ -99,6 +63,13 @@ public class CodeScanner: UIView {
         
         let view = ViewFinder()
         
+        view.maskColor = configuration.viewFinderMaskColor
+        view.borderWidth = configuration.viewFinderBorderWidth
+        view.borderColor = configuration.viewFinderBorderColor
+        view.cornerSize = configuration.viewFinderCornerSize
+        view.cornerWidth = configuration.viewFinderCornerWidth
+        view.cornerColor = configuration.viewFinderCornerColor
+        
         addSubview(view)
         
         return view
@@ -109,8 +80,11 @@ public class CodeScanner: UIView {
         
         let view = UILabel()
         
-        view.font = guideTextFont
-        view.textColor = guideTextColor
+        view.text = configuration.guideTitle
+        view.font = configuration.guideTextFont
+        view.textColor = configuration.guideTextColor
+        
+        view.sizeToFit()
         
         addSubview(view)
         
@@ -122,8 +96,8 @@ public class CodeScanner: UIView {
         
         let view = UIButton()
         
-        view.setImage(torchOffImage, for: .normal)
-        view.frame.size = CGSize(width: torchButtonWidth, height: torchButtonHeight)
+        view.setImage(configuration.torchOffImage, for: .normal)
+        view.frame.size = CGSize(width: configuration.torchButtonWidth, height: configuration.torchButtonHeight)
         view.isHidden = true
         
         addSubview(view)
@@ -134,9 +108,17 @@ public class CodeScanner: UIView {
         
     }()
     
+    public convenience init(configuration: CodeScannerConfiguration) {
+        
+        self.init()
+        self.configuration = configuration
+        
+        setup()
+        
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -222,11 +204,12 @@ public class CodeScanner: UIView {
     
     private func addPreview() {
         
-        capturePreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        capturePreviewLayer.videoGravity = .resizeAspectFill
-        capturePreviewLayer.frame = bounds
+        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer.videoGravity = .resizeAspectFill
         
-        layer.addSublayer(capturePreviewLayer)
+        layer.insertSublayer(previewLayer, at: 0)
+        
+        capturePreviewLayer = previewLayer
         
     }
     
@@ -263,7 +246,9 @@ public class CodeScanner: UIView {
         
         let box = CGRect(x: (viewWidth - boxWidth) / 2, y: (viewHeight - boxHeight) / 2, width: boxWidth, height: boxHeight)
 
-        laserView.frame.size = CGSize(width: boxWidth - 2 * viewFinder.borderWidth - 2 * laserGap, height: laserHeight)
+        capturePreviewLayer?.frame = bounds
+        
+        laserView.frame.size = CGSize(width: boxWidth - 2 * configuration.viewFinderBorderWidth - 2 * configuration.laserGap, height: configuration.laserHeight)
         laserView.center.x = box.midX
         
         viewFinder.frame = bounds
@@ -272,10 +257,10 @@ public class CodeScanner: UIView {
         viewFinder.setNeedsDisplay()
         
         guideView.center.x = bounds.midX
-        guideView.frame.origin.y = box.origin.y + boxHeight + guideMarginTop
+        guideView.frame.origin.y = box.origin.y + boxHeight + configuration.guideMarginTop
         
         torchButton.center.x = bounds.midX
-        torchButton.frame.origin.y = box.origin.y - torchButtonMarginBottom - torchButtonHeight
+        torchButton.frame.origin.y = box.origin.y - configuration.torchButtonMarginBottom - configuration.torchButtonHeight
         
         stopLaser()
 
@@ -287,8 +272,8 @@ public class CodeScanner: UIView {
             return
         }
         
-        let top = box.origin.y + viewFinder.borderWidth + laserHeight / 2
-        let bottom = box.origin.y + box.height - viewFinder.borderWidth - laserHeight / 2
+        let top = box.origin.y + configuration.viewFinderBorderWidth + configuration.laserHeight / 2
+        let bottom = box.origin.y + box.height - configuration.viewFinderBorderWidth - configuration.laserHeight / 2
         
         laserView.center.y = top
         
