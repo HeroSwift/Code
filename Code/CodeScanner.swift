@@ -3,19 +3,19 @@ import UIKit
 import AVFoundation
 
 public class CodeScanner: UIView {
-    
-    public var delegate: CodeScannerDelegate!
-    
+
     private var supportedCodeTypes: [AVMetadataObject.ObjectType] = [ .qr, .code128 ]
     
     private var configuration: CodeScannerConfiguration!
+    
+    private var delegate: CodeScannerDelegate!
 
     private var captureSession: AVCaptureSession!
     
     private var captureDevice: AVCaptureDevice!
     
     private var capturePreviewLayer: AVCaptureVideoPreviewLayer?
-    
+
     private var isTorchOn = false {
         didSet {
             if isTorchOn {
@@ -111,9 +111,10 @@ public class CodeScanner: UIView {
         
     }()
     
-    public convenience init(configuration: CodeScannerConfiguration) {
+    public convenience init(configuration: CodeScannerConfiguration, delegate: CodeScannerDelegate) {
         self.init()
         self.configuration = configuration
+        self.delegate = delegate
         setup()
     }
 
@@ -123,8 +124,18 @@ public class CodeScanner: UIView {
 
         updateView()
         
+        requestPermissions()
+        
+    }
+    
+    private func prepareDevice() {
+        
+        guard !isPreviewing else {
+            return
+        }
+        
         guard let device = pickDevice() else {
-            print("has no available device")
+            delegate.codeScannerWillScanWithoutPermissions(self)
             return
         }
         
@@ -144,8 +155,35 @@ public class CodeScanner: UIView {
         addPreview()
         
         captureSession.startRunning()
-
+        
         isPreviewing = true
+        
+    }
+    
+    private func requestPermissions() {
+        
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            prepareDevice()
+            break
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                DispatchQueue.main.async {
+                    if granted {
+                        self.prepareDevice()
+                        self.delegate.codeScannerDidPermissionsGranted(self)
+                    }
+                    else {
+                        self.delegate.codeScannerDidPermissionsDenied(self)
+                    }
+                }
+            }
+            break
+        default:
+            // 拒绝
+            self.delegate.codeScannerWillScanWithoutPermissions(self)
+            break
+        }
         
     }
     

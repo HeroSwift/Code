@@ -18,8 +18,7 @@ class ViewController: UIViewController {
         let configuration = CodeScannerConfiguration()
         configuration.guideLabelTitle = "扫描吧"
         
-        let scanner = CodeScanner(configuration: configuration)
-        scanner.delegate = self
+        let scanner = CodeScanner(configuration: configuration, delegate: self)
         scanner.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(scanner)
