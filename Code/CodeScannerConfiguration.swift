@@ -1,7 +1,8 @@
 
 import UIKit
+import Foundation
 
-public class CodeScannerConfiguration {
+@objc public class CodeScannerConfiguration: NSObject {
     
     public var viewFinderMaskColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.61)
     
@@ -14,8 +15,6 @@ public class CodeScannerConfiguration {
     public var viewFinderBorderWidth = 1 / UIScreen.main.scale
     
     public var viewFinderBorderColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.6)
-    
-    public var guideLabelTitle = "扫描"
     
     public var guideLabelTextFont = UIFont.systemFont(ofSize: 12)
     
@@ -38,7 +37,5 @@ public class CodeScannerConfiguration {
     public var torchButtonHeight: CGFloat = 44
     
     public var torchButtonMarginBottom: CGFloat = 0
-
-    public init() { }
 
 }

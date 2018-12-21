@@ -5,7 +5,7 @@ import UIKit
 
 public class CodeView: UIImageView {
     
-    public var text = "" {
+    @objc public var text = "" {
         didSet {
             
             let data = text.data(using: String.Encoding.utf8)

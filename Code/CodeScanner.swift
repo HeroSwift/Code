@@ -4,6 +4,13 @@ import AVFoundation
 
 public class CodeScanner: UIView {
 
+    @objc public var guideTitle = "" {
+        didSet {
+            guideLabel.text = guideTitle
+            guideLabel.sizeToFit()
+        }
+    }
+    
     private var supportedCodeTypes: [AVMetadataObject.ObjectType] = [ .qr, .code128 ]
     
     private var configuration: CodeScannerConfiguration!
@@ -83,12 +90,9 @@ public class CodeScanner: UIView {
         let view = UILabel()
         
         view.isHidden = true
-        view.text = configuration.guideLabelTitle
         view.font = configuration.guideLabelTextFont
         view.textColor = configuration.guideLabelTextColor
-        
-        view.sizeToFit()
-        
+
         addSubview(view)
         
         return view
@@ -111,7 +115,7 @@ public class CodeScanner: UIView {
         
     }()
     
-    public convenience init(configuration: CodeScannerConfiguration, delegate: CodeScannerDelegate) {
+    @objc public convenience init(configuration: CodeScannerConfiguration, delegate: CodeScannerDelegate) {
         self.init()
         self.configuration = configuration
         self.delegate = delegate
@@ -123,8 +127,6 @@ public class CodeScanner: UIView {
         backgroundColor = .clear
 
         updateView()
-        
-        requestPermissions()
         
     }
     
@@ -342,6 +344,11 @@ public class CodeScanner: UIView {
         isTorchOn = !isTorchOn
     }
     
+    public override func didMoveToWindow() {
+        super.didMoveToWindow()
+        requestPermissions()
+    }
+    
     public override func layoutSubviews() {
         super.layoutSubviews()
         updateView()
@@ -363,8 +370,8 @@ extension CodeScanner: AVCaptureMetadataOutputObjectsDelegate {
         }
         
         let result = metadataObject as! AVMetadataMachineReadableCodeObject
-        if let code = result.stringValue {
-            delegate.codeScannerDidScanSuccess(self, code: code)
+        if let text = result.stringValue {
+            delegate.codeScannerDidScanSuccess(self, text: text)
         }
         
     }

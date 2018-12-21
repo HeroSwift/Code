@@ -1,13 +1,13 @@
 
 import Foundation
 
-public protocol CodeScannerDelegate {
+@objc public protocol CodeScannerDelegate {
     
     // 扫描时，发现没权限
     func codeScannerWillScanWithoutPermissions(_ codeScanner: CodeScanner)
     
     // 扫描成功时触发
-    func codeScannerDidScanSuccess(_ codeScanner: CodeScanner, code: String)
+    func codeScannerDidScanSuccess(_ codeScanner: CodeScanner, text: String)
     
     // 用户点击同意授权
     func codeScannerDidPermissionsGranted(_ codeScanner: CodeScanner)
@@ -21,7 +21,7 @@ public extension CodeScannerDelegate {
     
     func codeScannerWillScanWithoutPermissions(_ codeScanner: CodeScanner) { }
     
-    func codeScannerDidScanSuccess(_ codeScanner: CodeScanner, code: String) { }
+    func codeScannerDidScanSuccess(_ codeScanner: CodeScanner, text: String) { }
     
     func codeScannerDidPermissionsGranted(_ codeScanner: CodeScanner) { }
     
