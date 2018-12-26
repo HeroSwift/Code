@@ -16,10 +16,10 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
 
         let configuration = CodeScannerConfiguration()
-        configuration.guideLabelTitle = "扫描吧"
         
         let scanner = CodeScanner(configuration: configuration, delegate: self)
         scanner.translatesAutoresizingMaskIntoConstraints = false
+        scanner.guideTitle = "扫描啊"
         
         view.addSubview(scanner)
         view.addConstraints([
