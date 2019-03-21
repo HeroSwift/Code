@@ -91,7 +91,7 @@ extension ViewController: CodeScannerDelegate {
         print("拒绝")
     }
     
-    func codeScannerWillScanWithoutPermissions(_ codeScanner: CodeScanner) {
+    func codeScannerDidPermissionsNotGranted(_ codeScanner: CodeScanner) {
         print("没权限")
     }
     
