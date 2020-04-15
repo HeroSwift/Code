@@ -79,20 +79,8 @@ class ViewController: UIViewController {
 
 extension ViewController: CodeScannerDelegate {
 
-    func codeScannerDidScanSuccess(_ codeScanner: CodeScanner, code: String) {
-        print(code)
-    }
-    
-    func codeScannerDidPermissionsGranted(_ codeScanner: CodeScanner) {
-        print("同意")
-    }
-    
-    func codeScannerDidPermissionsDenied(_ codeScanner: CodeScanner) {
-        print("拒绝")
-    }
-    
-    func codeScannerDidPermissionsNotGranted(_ codeScanner: CodeScanner) {
-        print("没权限")
+    func codeScannerDidScanSuccess(_ codeScanner: CodeScanner, text: String) {
+        print(text)
     }
     
 }
