@@ -11,7 +11,7 @@ public class CodeScanner: UIView {
         }
     }
     
-    private var supportedCodeTypes: [AVMetadataObject.ObjectType] = [ .qr, .code39, .code93, .code128, .code39Mod43, .ean8, .ean13 ]
+    private var supportedCodeTypes: [AVMetadataObject.ObjectType] = [ .qr, .code39, .code93, .code128, .code39Mod43, .ean8, .ean13, .upce ]
     
     private var configuration: CodeScannerConfiguration!
     
