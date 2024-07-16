@@ -38,7 +38,7 @@ public class CodeScanner: UIView {
         }
     }
     
-    private var isPreviewing = false {
+    @objc public var isPreviewing = false {
         didSet {
             if isPreviewing {
                 guideLabel.isHidden = false
