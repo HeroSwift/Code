@@ -38,7 +38,7 @@ public class CodeScanner: UIView {
         }
     }
     
-    @objc public var isPreviewing = false {
+    private var isPreviewing = false {
         didSet {
             if isPreviewing {
                 guideLabel.isHidden = false
@@ -128,6 +128,16 @@ public class CodeScanner: UIView {
 
         updateView()
         prepareDevice()
+        
+    }
+    
+    @objc public func destroy() {
+        if !isPreviewing {
+            return
+        }
+        
+        captureSession.stopRunning()
+        isPreviewing = false
         
     }
     
